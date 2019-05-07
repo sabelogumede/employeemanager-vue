@@ -13,6 +13,14 @@
     <router-link to="/" class="btn grey">Back</router-link>
     <!-- Delete-button -->
     <button @click="deleteEmployee" class="btn red">Delete</button>
+
+    <!-- floting button -->
+    <div class="fixed-action-btn">
+      <router-link v-bind:to="{name: 'edit-employee', params: {employee_id: employee_id}}"
+        class="btn-floating btn-large red">
+        <i class="fas fa-edit"></i>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -62,25 +70,27 @@ export default {
             this.name = doc.data().name;
             this.dept = doc.data().dept;
             this.position = doc.data().position;
-          })
-        })
+          });
+        });
     },
     deleteEmployee() {
       if (confirm("Are you sure?")) {
-
+        // --------
         db.collection("employees")
           .where("employee_id", "==", this.$route.params.employee_id)
-          .get().then(querySnapshot => {
+          .get()
+          .then(querySnapshot => {
             querySnapshot.forEach(doc => {
               // delete using ref
-              doc.ref.delete()
+              doc.ref.delete();
               //then redirect us
-              this.$router.push('/')
-            })
-          })
-
+              this.$router.push("/");
+            });
+          });
+        // --------
       }
     }
+    // ---delete
   }
 };
 </script>

@@ -3,7 +3,7 @@
     <!-- <h3>Dashboard</h3> -->
     <ul class="collection with-header">
       <li class="collection-header">
-        <h4>Employees</h4>
+        <h6>Employees</h6>
       </li>
       <!-- our list -->
       <li v-for="employee in employees" v-bind:key="employee.id" class="collection-item">
@@ -16,7 +16,7 @@
         </router-link>
       </li>
     </ul>
-
+    <!-- floting button -->
     <div class="fixed-action-btn">
       <router-link to="/new" class="btn-floating btn-large red">
         <i class="fa fa-plus"></i>
