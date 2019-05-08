@@ -8,15 +8,16 @@
                         <form>
                             <div class="input-field">
                                 <i class="material-icons prefix">email</i>
-                                <input type="text" id="email">
+                                <input type="text" id="email" v-model="email">
                                 <label class="white-text" for="email">Email</label>
                             </div>
                             <div class="input-field">
                                 <i class="material-icons prefix">lock</i>
-                                <input type="text" id="password">
+                                <input type="password" id="password" v-model="password">
                                 <label class="white-text" for="password">Password</label>
                             </div>
-                            <button class="btn btn-large grey lighten-4 black-text">Login</button>
+                            <button v-on:click="login" class="btn btn-large grey lighten-4 black-text">Login</button>
+                            <p>dont have an account <router-link class="linkColor" to="/register">Register!</router-link></p>
                         </form>
                     </div>
                 </div>
@@ -26,11 +27,47 @@
 </template>
 
 <script>
+    import firebase from 'firebase';
+
     export default {
         name: 'login',
         data: function() {
+            return {
+                email: '',
+                password: ''
+            };
+        },
+        methods: {
+            login: function(e) {
+                // console.log('register');
+                firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+                .then(user => {
+                    alert(`You are logged in as ${user.email}`);
+                    // redirect
+                    //this.$router.push('/');
 
+                    // reload and redirect
+                    this.$router.go({
+                        path: this.$router.path
+                    });
+                }, 
+                err => {
+                    alert(err.message);
+                })
+
+                e.preventDefault();
+            }
         }
     }
 </script>
+
+<style scoped>
+    input {
+        border-bottom: 1px solid #ffffff !important;
+    }
+    .linkColor {
+        color: #000000;
+    }
+</style>
+
 
